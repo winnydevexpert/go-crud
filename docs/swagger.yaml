@@ -1,0 +1,143 @@
+definitions:
+  domain.AppDataListResponse:
+    properties:
+      description:
+        type: string
+      items: {}
+      pagination:
+        $ref: '#/definitions/utils.PaginationObject'
+      title:
+        type: string
+    type: object
+  domain.UserRegister:
+    properties:
+      firstName:
+        description: ชื่อ
+        type: string
+      lastName:
+        description: นามสกุล
+        type: string
+      midName:
+        description: ชื่อกลาง
+        type: string
+    type: object
+  domain.UserRegisterRequest:
+    properties:
+      firstName:
+        description: ชื่อ
+        type: string
+      lastName:
+        description: นามสกุล
+        type: string
+      midName:
+        description: ชื่อกลาง
+        type: string
+    required:
+    - firstName
+    - lastName
+    type: object
+  domain.UserRegisterResponse:
+    properties:
+      apiVersion:
+        type: string
+      data:
+        properties:
+          description:
+            type: string
+          item:
+            $ref: '#/definitions/domain.UserRegister'
+          title:
+            type: string
+        type: object
+    type: object
+  utils.ErrorMessagePrototype:
+    properties:
+      apiVersion:
+        type: string
+      error:
+        $ref: '#/definitions/utils.errorResponse'
+    type: object
+  utils.PaginationObject:
+    properties:
+      currentPage:
+        description: หน้าปัจจุบัน
+        type: integer
+      lastPage:
+        description: หน้าสุดท้าย
+        type: integer
+      nextPage:
+        description: หน้าถัดไป
+        type: integer
+      perPage:
+        description: จำนวนต่อหน้า
+        type: integer
+      previousPage:
+        description: หน้าก่อนหน้า
+        type: integer
+      total:
+        description: จำนวนรายการทั้งหมด
+        type: integer
+    type: object
+  utils.errorResponse:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+  title: base code
+paths:
+  /v1/appData/list:
+    get:
+      consumes:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.AppDataListResponse'
+      tags:
+      - App data
+  /v1/user/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User register
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UserRegisterRequest'
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.UserRegisterResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorMessagePrototype'
+      tags:
+      - User
+  /v2/appData/list:
+    get:
+      consumes:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.AppDataListResponse'
+      tags:
+      - App data
+security:
+- bearer: []
+securityDefinitions:
+  bearer:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

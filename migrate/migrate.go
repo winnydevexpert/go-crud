@@ -1,8 +1,8 @@
 package main
 
 import (
-	"go-crud/initializers"
-	"go-crud/models"
+	"go-crud-learn/initializers"
+	"go-crud-learn/model"
 )
 
 func init() {
@@ -12,6 +12,7 @@ func init() {
 
 func main() {
 	 // Migrate the schema
-	 initializers.DB.AutoMigrate(&models.Post{})
-	 initializers.DB.AutoMigrate(&models.Comment{})
+	 initializers.DB.AutoMigrate(&model.Customer{})
+	 initializers.DB.AutoMigrate(&model.Order{})
+	 initializers.DB.AutoMigrate(&model.Bill{})
 }
